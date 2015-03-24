@@ -2,7 +2,7 @@
 title: Jerematic
 email: jsteinert@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  My contribution to the global collective; notes about linux, devops, programming, and technology.  
+  A contribution to the global collective; notes about linux, devops, programming, and technology.  
 baseurl: ""
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: jerematic
