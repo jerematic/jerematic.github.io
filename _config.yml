@@ -5,7 +5,7 @@ url: "http://jerematic.com" # the base hostname & protocol for your site
 # THEME-SPECIFIC CONFIGURATION
 theme:
   # Meta
-  title: Jerematic
+  title: jerematic.com
   avatar: bobomb.png
   gravatar: # Email MD5 hash
   description: "Notes about linux, devops, programming, and technology" # used by search engines
