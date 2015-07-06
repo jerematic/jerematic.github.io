@@ -3,7 +3,7 @@ layout: post
 title: Capistrano 3 multisite deployment (Part 1)
 ---
 ## Introduction
-On a recent project, I had a need to deploy over 100 copies of software from a git repository, along with a second repository for add-ons and styles specific to that site.  Since Capistrano 3 wasn't built for this type of deployment, I had to get creative.  A CI/CD tool is used for testing and running capistrano.  The process needed to be automated, accessible to all team members, yet functional enough to handle a variety of situations.  This will be a three part series highlighting some of the techniques used on this project.  In the near future, I'll likely be doing a rewrite and offloading most functionality to ruby.
+On a recent project, I had a need to deploy over 100 copies of software from a git repository, along with a second repository for add-ons and styles specific to that site.  Since Capistrano 3 wasn't built for this type of deployment, I had to get creative.  Capistrano needed to be run from a CI/CD service.  The process needed to be automated, accessible to all team members, yet functional enough to handle a variety of situations.  This will be a three part series highlighting some of the techniques used on this project.  In the near future, I'll likely be doing a rewrite and offloading most functionality to ruby.
 
 ## Setting the stage
 The first step was to build site specific parameters in YAML files, which could be easily updated by anyone on the team.  All passwords are encrypted for security and decrypted the configuration phase.  The YAML file consisted of a nested hash for each site:
