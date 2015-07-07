@@ -1,21 +1,25 @@
 ---
 layout: post
-title: Capistrano 3 multisite deployment (Part 1)
+title: Capistrano 3 multisite deployment
 ---
 ## Introduction
-On a recent project, I had a need to deploy over 100 copies of software from a git repository, along with a second repository for add-ons and styles specific to that site.  Since Capistrano 3 wasn't built for this type of deployment, I had to get creative.  Capistrano needed to be run from a CI/CD service.  The process needed to be automated, accessible to all team members, yet functional enough to handle a variety of situations.  This will be a three part series highlighting some of the techniques used on this project.  In the near future, I'll likely be doing a rewrite and offloading most functionality to ruby.
+On a recent project, I had a need to deploy over 100 copies of the same repository with different settings for each.  Since Capistrano wasn't exactly built for this type of deployment, I had to get creative.
 
 ## Setting the stage
-The first step was to build site specific parameters in YAML files, which could be easily updated by anyone on the team.  All passwords are encrypted for security and decrypted in the configuration phase.  The YAML file consists of a nested hash for each site:
+The first step is to build site specific parameters in environment YAML files, which can be easily updated with new sites or configuration changes.  We'll store these files in *lib/deploy/*.  All passwords should be encrypted for security purposes and decrypted in the configuration phase.  The YAML file will consist of a nested hash for each site's configuration values:
 {% highlight yaml %}
-example.com:
-  name: example
+example:
+  url: example.com
   pass:
   host: 127.0.0.1
   maintenance: false
 {% endhighlight %}
 
+Our *config/deploy.rb* file will have the following values to load the YAML docs and get us setup to deploy .
 {% highlight ruby %}
+set :repo_url,      ''
+set :log_level,     :info
+set :pty,           true
 set :devel,         YAML.load_file("lib/deploy/devel.yaml")
 set :staging,       YAML.load_file("lib/deploy/staging.yaml")
 set :production,    YAML.load_file("lib/deploy/production.yaml")
@@ -23,7 +27,7 @@ set :sites,         fetch(:"#{fetch(:stage)}")
 {% endhighlight %}
 
 ### Building the stages
-Without writing some ruby, the only way I've found to effectively build individual parameters for each site is to create config files for each and loop through them locally.  It's possible that individual site parameters could be stored and accessed in an environment variable.  But overwriting global values in capistrano for each site while performing each task needed can run into problems with scope that are more easily solved with separate stages.
+Without writing some ruby, the only way I've found to effectively build individual parameters for each site is to create config files for each and loop through them locally.  Overwriting global values in capistrano for each site while performing each task needed can run into problems with scope that are more easily solved with separate stages.
 
 First we need to write a template class to build the stages from an ERB template.
 {% highlight ruby %}
@@ -39,7 +43,7 @@ namespace :deploy do
 end
 {% endhighlight %}
 
-The template file will include all of the variables we'll be accessing in the next steps.
+The template file will include all of the variables we'll be accessing for the deployment.
 {% highlight erb %}
 set :application, "<%= fetch(:sname) %>"
 set :deploy_to,   "/srv/<%= fetch(:sname) %>"
@@ -52,15 +56,15 @@ set :version,     "<%= fetch(:version) %>"
 server '127.0.0.1', user: 'deploy', roles: %w{web backup}
 {% endhighlight %}
 
-Next we use this template to build the staging configuration files, stored in *config/deploy/*.
+Next we use this template to build the staging configuration files, stored in *config/deploy/*.  We'll configure this to run before the task we'll write to loop through all of the sites in our YAML document.
 {% highlight ruby %}
 namespace :deploy do
   desc 'Build staging config files from template for each site'
-  task :build_config do
+  task build_config: :'deploy:all_sites' do
     fetch(:sites).each do |site, attr|
       run_locally do
         set :pass, attr['pass']
-        set :sname, attr['name']
+        set :sname, site
         set :version, attr['version']
         set :maintenance, attr['maintenance']
         set :host, attr['host']
@@ -72,7 +76,6 @@ end
 {% endhighlight %}
 
 ### Deploying the sites
-
 Now all of these stages can be accessed individually, which makes testing much easier.  We just need a task that will deploy them all in a single command, which has to be run locally on either your workstation or the CI/CD tool of your choice.
 
 {% highlight ruby %}
@@ -91,5 +94,3 @@ All that's left is to run
 {% highlight bash %}
 bundle exec cap staging deploy:all_sites
 {% endhighlight %}
-
-In the next post, we'll start writing tasks to use this information for our deployments.
