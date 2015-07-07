@@ -15,7 +15,7 @@ example:
   maintenance: false
 {% endhighlight %}
 
-Our *config/deploy.rb* file will have the following values to load the YAML docs and get us setup to deploy .
+Our *config/deploy.rb* file will have the following values to load the YAML docs and get us setup to deploy.
 {% highlight ruby %}
 set :repo_url,      ''
 set :log_level,     :info
@@ -43,7 +43,7 @@ namespace :deploy do
 end
 {% endhighlight %}
 
-The template file will include all of the variables we'll be accessing for the deployment.
+The template file will include all of the variables we'll be accessing for the deployment.  Name these for your environments in *lib/capistrano/templates*, such as *lib/capistrano/templates/devel.rb.erb*.
 {% highlight erb %}
 set :application, "<%= fetch(:sname) %>"
 set :deploy_to,   "/srv/<%= fetch(:sname) %>"
@@ -56,7 +56,7 @@ set :version,     "<%= fetch(:version) %>"
 server '127.0.0.1', user: 'deploy', roles: %w{web backup}
 {% endhighlight %}
 
-Next we use this template to build the staging configuration files, stored in *config/deploy/*.  We'll configure this to run before the task we'll write to loop through all of the sites in our YAML document.
+Next we use this template to build the staging configuration files, stored in *config/deploy/*.  They'll be named *application_stage* and we'll configure this to run before the task we'll write to loop through all of the sites in our YAML document.
 {% highlight ruby %}
 namespace :deploy do
   desc 'Build staging config files from template for each site'
