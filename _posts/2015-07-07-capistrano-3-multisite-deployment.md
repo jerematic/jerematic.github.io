@@ -2,7 +2,7 @@
 layout: post
 title: Capistrano 3 multisite deployment
 ---
-On a recent project, I had a need to deploy over 100 copies of the same repository with different settings for each.  Since Capistrano wasn't exactly built for this type of deployment, I had to get creative.  This method will separate each site into a stage, built from a template that pulls information from a YAML file for the desired environment.  This allows individual testing for each site as well as deployment across all sites and eliminates problems with variable scope while writing tasks.
+On a recent project, I had a need to deploy over 100 copies of the same repository with different settings for each.  Since Capistrano wasn't exactly built for this type of deployment, I had to get creative.  This method will separate each site into a stage, built from a template that pulls information from a YAML file for the desired environment.  This allows individual testing for each site, as well as deployment across all sites, and eliminates problems with variable scope while writing tasks.
 
 ## Setting the stage
 The first step is to build site specific parameters in environment YAML files, which can be easily updated with new sites or configuration changes.  We'll store these files in *lib/deploy/*.  All passwords should be encrypted for security purposes and decrypted in the configuration phase.  The YAML file will consist of a nested hash for each site's configuration values:
