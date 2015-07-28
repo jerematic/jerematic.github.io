@@ -44,6 +44,10 @@ Vagrant.configure("2") do |config|
         v.vmx["memsize"]  = settings[:mem]
         v.vmx["numvcpus"] = settings[:cpus]
       end
+
+      mounts.each do |folder, mount|
+        node.vm.synced_folder folder, mount
+      end
     end
   end
 end
@@ -57,3 +61,4 @@ node.vm.provider "virtualbox" do |v|
   v.cpus    = settings[:cpus]
 end
 {% endhighlight %}
+
