@@ -1,8 +1,12 @@
 ---
 layout: post
 title: A Vagrantfile template
+categories: [ linux ]
+comments: true
 ---
 This is a Vagrantfile template that I use for most projects.  It's easy to add new nodes or mount points as the cluster grows and each node can be customized.  Each server can be easily provisioned with Puppet, Chef, SaltStack, or a script.  The [vagrant-cachier](https://github.com/fgrehm/vagrant-cachier) plugin is used to speed up provisioning time.
+
+<!--more-->
 
 {% highlight ruby %}
 domain = 'dev.example.com'

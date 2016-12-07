@@ -1,68 +1,76 @@
-# SITE CONFIGURATION
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://jerematic.com" # the base hostname & protocol for your site
+#
+###################################
+# Site wide configuration
+####################################
+#
+title: Jerematic.com
+email: jsteinert@gmail.com
+description: A blog about development, devops, administration, and technology
+url: # the base hostname & protocol for your site
 
-# THEME-SPECIFIC CONFIGURATION
-theme:
-  # Meta
-  title: jerematic.com
+# Header and footer text
+footer_text: >
+  <a href="http://jerematic.com">Jerematic</a>
+
+gems:
+  - 'jekyll-twitter-plugin'
+  - 'jekyll-gist'
+
+#
+###################################
+# Jekyll configuration
+####################################
+#
+timezone:          America/Detroit
+markdown:          kramdown
+highlighter:       rouge
+excerpt_separator: <!--more-->
+permalink:         /articles/:year-:month/:title
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
+
+#
+###################################
+# Site Owner configuration
+####################################
+#
+owner:
+  name: Jeremy Steinert
   avatar: robot-elder.png
-  gravatar: # Email MD5 hash
-  description: "Notes about linux, infrastructure, devops, programming, and technology" # used by search engines
-
-  # Header and footer text
-  footer_text: >
-   © 2015 <a href="http://jerematic.com">Jerematic</a>
-
-  # Icons
-  rss: false
-  email_address: jsteinert@gmail.com
-  behance:
-  bitbucket:
-  dribbble:
-  facebook:
-  flickr:
-  github: "jerematic"
-  google_plus:
-  instagram:
-  linkedin:  https://www.linkedin.com/profile/preview?locale=en_US&trk=prof-0-sb-preview-primary-button
-  pinterest:
-  reddit:
-  soundcloud:
-  stack_exchange:  # Full URL
-  steam:
-  tumblr:
+  job: "CTO / Developer / Engineer"
+  bio: "A blog about development, devops, server administration, and technology"
+  email: jsteinert@gmail.com
+  disqus-shortname: jerematic
   twitter: "jerematic"
-  wordpress:
-  youtube:
-
-  # Scripts
-  google_analytics: UA-16940414-1
-  disqus_shortname: jerematic
-  katex: true # Enable if using math markup
-
-  # Localization strings
-  str_follow_on: "Follow on"
-  str_rss_follow: "Follow RSS feed"
-  str_email: "Email"
-  str_next: "Next"
-  str_prev: "Prev"
-  str_continue_reading: "Continue reading"
-
-  # Colours, typography and padding
-  # Open the "_sass > base" folder, and open "_variables.scss"
-  google_fonts: "Source+Sans+Pro:400,700,700italic,400italic"
-  
-  # Post navigation
-  post_navigation: false
-
-# PAGINATION
-paginate: 5
-paginate_path: "blog/page:num"
-
-# BUILD SETTINGS
-markdown: kramdown
-highlighter: pygments
-sass:
-  sass_dir: _sass
-  style: :compressed
+  facebook: #username
+  google:
+    plus: #username
+    analytics: UA-16940414-1
+    verify:
+    ad-client:
+    ad-slot:
+  bing-verify:
+  github: "jerematic"
+  gitlab: #username
+  stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
+  linkedin: "jeremysteinert"
+  skype: #username
+  xing: #username
+  instagram: "jerematic1"
+  lastfm: #username
+  tumblr: #username
+  pinterest: #username
+  foursquare: #username
+  steam: #username
+  dribbble: #username
+  youtube: #username
+  soundcloud: #username
+  weibo: #username
+  flickr: #username
+  500px: #username
+  codepen: #username

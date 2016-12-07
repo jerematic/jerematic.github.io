@@ -1,18 +1,27 @@
 ---
+# Only the main Sass file needs front matter (the dashes are enough)
 ---
-// External
-@import 'external/reset';
-@import 'external/syntax';
+@charset "UTF-8";
 
-// Base
-@import 'base/variables';
-@import 'base/global';
-@import 'base/utility';
+// Mixins
+@import "components/mixins";
 
-// Posts
-@import 'layouts/posts';
-@import 'layouts/index';
+// Variables
+@import "components/variables";
 
-// Partials
-@import 'includes/header';
-@import 'includes/footer';
+// Reset
+@import "components/normalize";
+
+// Components
+@import "components/global";
+@import "components/helpers";
+@import "components/grid";
+@import "components/typography";
+@import "components/buttons";
+@import "components/syntax-highlighting";
+
+// Pages styling
+@import "pages/layout";
+@import "pages/tags";
+@import "pages/archive";
+@import "pages/post";
